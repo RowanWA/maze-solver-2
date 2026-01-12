@@ -79,6 +79,7 @@ void SolutionFollower::loop(){
   }
 
   if (state == JUNCTION) {
+    identifyJunction();
   }
 
   if (state == TURN_LEFT) {
@@ -137,6 +138,13 @@ void SolutionFollower::identifyJunction() {
 
 
 
+  // if there's a left take it
+  if (lineSensorValues[4] > 750) {
+    if (lineSensorValues[2] < 750 && lineSensorValues[0] < 750){
+      state = TURN_RIGHT;
+      return;
+    }
+  }
   // if there's a possible only left turn take it
   if (lineSensorValues[0] > 750) {
     if (lineSensorValues[2] < 750 && lineSensorValues[4] < 750){
@@ -145,28 +153,28 @@ void SolutionFollower::identifyJunction() {
     }
   }
 
-  // if (lineSensorValues[2] > 750) {
-  //   motors.setSpeeds(baseSpeed, baseSpeed);
-  //   delay(100);
-
-  //   state = LINE_FOLLOWER;
-
-
-  //   addDecision(FORWARD);
-
-
-  //   return;
-  // }
-
-  // if there's a left take it
-  if (lineSensorValues[4] > 750) {
-    if (lineSensorValues[2] < 750 && lineSensorValues[0] < 750){
-      state = TURN_RIGHT;
+    if(count == totalLength){
+      state = FINISHED;
       return;
     }
-  }
+    Decisions d = path[count];
 
+    switch(d) {
+      case LEFT: {
+        state = TURN_LEFT;
+        break;
+      }
+      case RIGHT: {
+        state = TURN_RIGHT;
+        break;
+      }
+      case FORWARD: {
+      motors.setSpeeds(baseSpeed, baseSpeed);
+      delay(100);
+      state = LINE_FOLLOWER;
+      break;
+      }
+    }
+    count++;
 
-  // any other case -> keep going
-  state = LINE_FOLLOWER;
 }

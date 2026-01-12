@@ -187,8 +187,9 @@ void loop() {
       solutionFollower.totalLength = mazeSolver.pathLength;
 
       display.gotoXY(1, 0);
-    display.print(F("Finished"));
-    while (!buttonB.getSingleDebouncedPress());
+      display.print(F("Finished"));
+      while (!buttonB.getSingleDebouncedPress())
+        ;
     }
     //display.clear();
     return;
