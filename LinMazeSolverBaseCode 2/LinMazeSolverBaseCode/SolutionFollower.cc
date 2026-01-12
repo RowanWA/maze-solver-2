@@ -135,37 +135,35 @@ void SolutionFollower::identifyJunction() {
   }
 
 
-  // if there's a left take it
+
+
+  // if there's a possible only left turn take it
   if (lineSensorValues[0] > 750) {
-    state = TURN_LEFT;
-    if (lineSensorValues[2] > 750 || lineSensorValues[4] > 750)
-
-      addDecision(LEFT);
-
-    return;
+    if (lineSensorValues[2] < 750 && lineSensorValues[4] < 750){
+      state = TURN_LEFT;
+      return;
+    }
   }
 
-  if (lineSensorValues[2] > 750) {
-    motors.setSpeeds(baseSpeed, baseSpeed);
-    delay(100);
+  // if (lineSensorValues[2] > 750) {
+  //   motors.setSpeeds(baseSpeed, baseSpeed);
+  //   delay(100);
 
-    state = LINE_FOLLOWER;
-
-
-    addDecision(FORWARD);
+  //   state = LINE_FOLLOWER;
 
 
-    return;
-  }
+  //   addDecision(FORWARD);
+
+
+  //   return;
+  // }
 
   // if there's a left take it
   if (lineSensorValues[4] > 750) {
-
-
-    state = TURN_RIGHT;
-
-
-    return;
+    if (lineSensorValues[2] < 750 && lineSensorValues[0] < 750){
+      state = TURN_RIGHT;
+      return;
+    }
   }
 
 
