@@ -185,5 +185,12 @@ void setup()
 
 void loop()
 {
-  mazeSolver.loop();
+  if(!mazeSolver.finished()){
+    mazeSolver.loop();
+    return;
+  }
+  
+  display.clear();
+  display.gotoXY(0,0);
+  display.print(F("Finished"));
 }

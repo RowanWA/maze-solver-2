@@ -54,6 +54,8 @@ class MazeSolver {
     // function to be called at every main loop
     void loop();
 
+    bool finished();
+
 };
 
 #endif

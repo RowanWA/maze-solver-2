@@ -126,6 +126,13 @@ void MazeSolver::checkIfDeadEnd() {
   }
 }
 
+bool MazeSolver::finished() {
+  if (state == FINISHED){
+  return true;}
+  return false;
+
+}
+
 void MazeSolver::identifyJunction() {
 
   delay(500);
@@ -202,7 +209,7 @@ void MazeSolver::turnRight() {
 
 void MazeSolver::uTurn() {
   motors.setSpeeds(-baseSpeed, baseSpeed);
-  delay(1450);
+  delay(1550);
   motors.setSpeeds(0, 0);
   state = LINE_FOLLOWER;
 }
