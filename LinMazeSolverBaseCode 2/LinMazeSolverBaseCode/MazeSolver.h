@@ -25,8 +25,7 @@ class MazeSolver {
 
   // path to be followed to solve the maze
   static const int MAX_PATH = 50;
-  Decisions path[MAX_PATH] = {};
-  int pathLength = 0;
+
 
   void addDecision(Decisions d);
 
@@ -55,6 +54,8 @@ class MazeSolver {
     void loop();
 
     bool finished();
+    Decisions path[MAX_PATH] = {};
+    int pathLength = 0;
 
 };
 

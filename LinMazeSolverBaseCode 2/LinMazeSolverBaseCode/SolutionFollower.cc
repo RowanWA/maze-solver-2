@@ -53,7 +53,7 @@ void SolutionFollower::followLine() {
 }
 
 
-void MazeSolver::checkIfJunction() {
+void SolutionFollower::checkIfJunction() {
   lineSensors.readLineBlack(lineSensorValues);
 
   bool junction = false;
@@ -70,8 +70,54 @@ void MazeSolver::checkIfJunction() {
   }
 }
 
+void SolutionFollower::loop(){
 
-void MazeSolver::identifyJunction() {
+  if (state == LINE_FOLLOWER) {
+    followLine();
+    //check if junction there's a junction and change state otherwise
+    checkIfJunction();
+  }
+
+  if (state == JUNCTION) {
+  }
+
+  if (state == TURN_LEFT) {
+    turnLeft();
+  }
+
+  if (state == TURN_RIGHT) {
+    turnRight();
+  }
+
+  if (state == FINISHED) {
+    motors.setSpeeds(0, 0);
+    return;
+  }
+
+  if (state == FAKE_END) {
+
+
+    while (!buttonB.getSingleDebouncedPress()) {
+      uint16_t position = lineSensors.readLineBlack(lineSensorValues);
+
+      display.gotoXY(0, 0);
+      display.print(position);
+      display.print("    ");
+      display.gotoXY(0, 1);
+      for (uint8_t i = 0; i < NUM_SENSORS; i++) {
+        uint8_t barHeight = map(lineSensorValues[i], 0, 1000, 0, 8);
+
+        if (barHeight > 8) { barHeight = 8; }
+        const char barChars[] = { ' ', 0, 1, 2, 3, 4, 5, 6, (char)255 };
+        display.print(barChars[barHeight]);
+      }
+
+      delay(50);
+    }
+  }
+}
+
+void SolutionFollower::identifyJunction() {
 
   delay(500);
   // move forward to identify other junctions

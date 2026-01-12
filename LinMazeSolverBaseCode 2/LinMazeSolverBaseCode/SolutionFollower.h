@@ -13,12 +13,17 @@ private:
   void identifyJunction();
 
   void turnLeft();
-  
+
   void turnRight();
 
 
   public:
+    int totalLength;
+    Decisions path[50];
+    
     void loop();
+
+
 };
 
 #endif
